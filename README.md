@@ -1,5 +1,3 @@
-# konfio_demo
-Coding Challenge
 #  How to resolve Coding Challenge - Bitcoin Price
 # Objective:
 Develop an automated and scalable process to obtain the 5-day moving
