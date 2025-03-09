@@ -1,0 +1,27 @@
+ingest:
+  version: demo
+  api_key_env_var_name: COINGECKO_APIKEY
+  endpoint: coins/{ids}/market_chart/range/
+  path_dict:  
+    ids:
+      - bitcoin
+  param_dict:
+    vs_currency: usd
+    from: 1727740800 
+    to: 1735689600 # 1 day -> g min, 2-89 days -> g hour, >=90 -> g day
+  data_granularity: day # add functionality to multiple requests range, options hour, minute
+  save_path: raw_data
+  clean_path: clean_data
+  report:
+    table_name: coin_prices
+    query: |
+      SELECT
+          time_date,
+          time_unix,
+          price,
+          AVG(price) OVER (ORDER BY time_date ROWS BETWEEN 4 PRECEDING AND CURRENT ROW) AS moving_avg_5_day
+      FROM
+          coin_prices
+      ORDER BY
+          time_date
+    report_path: report_data
